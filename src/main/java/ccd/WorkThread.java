@@ -3,6 +3,7 @@ package ccd;
 import antlr.Java8Lexer;
 import antlr.Java8Parser;
 import ccd.h1.MethodVisitor;
+import ccd.h1.WithTokenVisitor;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -28,7 +29,8 @@ public class WorkThread extends Thread{
         CharStream inputStream;
         Java8Parser parser;
         ParseTree parseTree;
-        MethodVisitor methodVisitor = new MethodVisitor();
+//        MethodVisitor methodVisitor = new MethodVisitor();
+        WithTokenVisitor methodVisitor = new WithTokenVisitor();
         Jedis redis = RedisUtil.getJedis();
         int fileSize = fileList.size();
         int i = 0;
@@ -38,7 +40,7 @@ public class WorkThread extends Thread{
                 parser = new Java8Parser(new CommonTokenStream(new Java8Lexer(inputStream)));
                 parseTree = parser.compilationUnit();
                 methodVisitor.setPathFilename(file);
-                methodVisitor.setRedis(redis);
+//                methodVisitor.setRedis(redis);
                 methodVisitor.visit(parseTree);
 //                File f = new File(file);
 //                if(f.exists()&&f.isFile())
